@@ -1,0 +1,12 @@
+[package]
+name = "pwc"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4.5.56", features = ["derive"] }
+itertools = "0.14.0"
+noodles = { version = "0.104.0", features = ["core"] }
+noodles-bgzf = "0.45.0"
+noodles-csi = "0.53.0"
+noodles-tabix = "0.59.0"
