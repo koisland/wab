@@ -73,8 +73,16 @@ fn main() -> Result<(), Box<dyn Error>> {
         let mut treatment_reader =
             tabix::io::indexed_reader::Builder::default().build_from_path(&args.treatment).unwrap();
 
-        let treatment_avg = get_average_in_window(&mut control_reader, &region).unwrap();
-        let control_avg = get_average_in_window(&mut treatment_reader, &region).unwrap();
+        let (
+            Ok(treatment_avg),
+            Ok(control_avg),
+        ) = (
+            get_average_in_window(&mut control_reader, &region),
+            get_average_in_window(&mut treatment_reader, &region)
+        ) else {
+            eprintln!("Region {region:?} failed for either control or treatment.");
+            return;
+        };
         
         let chrom = region.name();
         let st = match region.start() {
